@@ -2,7 +2,8 @@
 
 	namespace CodeProject\Http\Controllers;
 
-	use CodeProject\Models\Client;
+	use CodeProject\Entities\Client;
+	use CodeProject\Repositories\ClientRepositoryEloquent;
 	use Illuminate\Auth\Access\Response;
 	use Illuminate\Http\Request;
 
@@ -10,10 +11,12 @@
 		/**
 		 * Display a listing of the resource.
 		 *
-		 * @return static[]
+		 * @param ClientRepositoryEloquent $repository
+		 *
+		 * @return Response
 		 */
-		public function index() {
-			return Client::all();
+		public function index(ClientRepositoryEloquent $repository) {
+			return $repository->all();
 		}
 
 		/**
