@@ -1,6 +1,6 @@
 <?php
 
-	namespace CodeProject;
+	namespace CodeProject\Models;
 
 	use Illuminate\Foundation\Auth\User as Authenticatable;
 	use Illuminate\Notifications\Notifiable;

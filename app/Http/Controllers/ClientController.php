@@ -2,8 +2,7 @@
 
 	namespace CodeProject\Http\Controllers;
 
-	use CodeProject\Client;
-	use CodeProject\Http\Requests;
+	use CodeProject\Models\Client;
 	use Illuminate\Auth\Access\Response;
 	use Illuminate\Http\Request;
 
@@ -11,10 +10,10 @@
 		/**
 		 * Display a listing of the resource.
 		 *
-		 * @return Response
+		 * @return static[]
 		 */
 		public function index() {
-			return \CodeProject\Client::all();
+			return Client::all();
 		}
 
 		/**
@@ -22,7 +21,7 @@
 		 *
 		 * @param Request $request
 		 *
-		 * @return Response
+		 * @return Client
 		 */
 		public function store(Request $request) {
 			return Client::create($request->all());
