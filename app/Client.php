@@ -9,6 +9,7 @@
 			'name',
 			'responsible',
 			'email',
+			'phone',
 			'address',
 			'obs'
 		];
