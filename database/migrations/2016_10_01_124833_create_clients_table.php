@@ -29,6 +29,6 @@
 		 * @return void
 		 */
 		public function down() {
-			Schema::dropIfExists('clients');
+			Schema::drop('clients');
 		}
 	}

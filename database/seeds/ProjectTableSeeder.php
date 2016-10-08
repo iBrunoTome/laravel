@@ -2,13 +2,13 @@
 
 	use Illuminate\Database\Seeder;
 
-	class ClientTableSeeder extends Seeder {
+	class ProjectTableSeeder extends Seeder {
 		/**
 		 * Run the database seeds.
 		 *
 		 * @return void
 		 */
 		public function run() {
-			factory(\CodeProject\Entities\Client::class, 10)->create();
+			factory(\CodeProject\Entities\Project::class, 10)->create();
 		}
 	}
