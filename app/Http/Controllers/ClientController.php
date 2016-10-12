@@ -4,7 +4,8 @@
 
 	use CodeProject\Repositories\ClientRepository;
 	use CodeProject\Services\ClientService;
-	use Illuminate\Auth\Access\Response;
+	use Illuminate\Database\Eloquent\ModelNotFoundException;
+	use Illuminate\Database\QueryException;
 	use Illuminate\Http\Request;
 
 	class ClientController extends Controller {
@@ -54,16 +55,42 @@
 		 * @return mixed
 		 */
 		public function show($id) {
-			return $this->repository->find($id);
+			try {
+				return $this->repository->find($id);
+			} catch (ModelNotFoundException $e) {
+				return [
+					'error'   => TRUE,
+					'message' => 'Cliente não encontrado.'
+				];
+			}
 		}
 
 		/**
 		 * Remove the specified resource from storage.
 		 *
 		 * @param $id
+		 *
+		 * @return array
 		 */
 		public function destroy($id) {
-			$this->repository->delete($id);
+			try {
+				$this->repository->delete($id);
+			} catch (QueryException $e) {
+				return [
+					'error'   => TRUE,
+					'message' => 'Cliente não pode ser apagado pois existe um ou mais projetos vinculados a ele.'
+				];
+			} catch (ModelNotFoundException $e) {
+				return [
+					'error'   => TRUE,
+					'message' => 'Cliente não encontrado.'
+				];
+			} catch (\Exception $e) {
+				return [
+					'error'   => TRUE,
+					'message' => 'Ocorreu algum erro ao editar o cliente.'
+				];
+			}
 		}
 
 		/**
@@ -72,9 +99,21 @@
 		 * @param $request
 		 * @param $id
 		 *
-		 * @return Response
+		 * @return array
 		 */
 		public function update(Request $request, $id) {
-			return $this->service->update($request->all(), $id);
+			try {
+				return $this->service->update($request->all(), $id);
+			} catch (ModelNotFoundException $e) {
+				return [
+					'error'   => TRUE,
+					'message' => 'Cliente não encontrado.'
+				];
+			} catch (\Exception $e) {
+				return [
+					'error'   => TRUE,
+					'message' => 'Ocorreu algum erro ao editar o cliente.'
+				];
+			}
 		}
 	}

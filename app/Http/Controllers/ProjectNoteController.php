@@ -4,7 +4,7 @@
 
 	use CodeProject\Repositories\ProjectNoteRepository;
 	use CodeProject\Services\ProjectNoteService;
-	use Illuminate\Auth\Access\Response;
+	use Illuminate\Database\Eloquent\ModelNotFoundException;
 	use Illuminate\Http\Request;
 
 	class ProjectNoteController extends Controller {
@@ -57,13 +57,20 @@
 		 *
 		 * @param $noteId
 		 *
-		 * @return Response
+		 * @return array
 		 */
 		public function show($id, $noteId) {
-			return $this->repository->findWhere([
-				'project_id' => $id,
-				'id'         => $noteId
-			]);
+			try {
+				return $this->repository->findWhere([
+					'project_id' => $id,
+					'id'         => $noteId
+				]);
+			} catch (ModelNotFoundException $e) {
+				return [
+					'error'   => TRUE,
+					'message' => 'Nota não encontrada.'
+				];
+			}
 		}
 
 		/**
@@ -73,10 +80,22 @@
 		 * @param $id
 		 * @param $noteId
 		 *
-		 * @return Response
+		 * @return array
 		 */
 		public function update(Request $request, $id, $noteId) {
-			return $this->service->update($request->all(), $noteId);
+			try {
+				return $this->service->update($request->all(), $id);
+			} catch (ModelNotFoundException $e) {
+				return [
+					'error'   => TRUE,
+					'message' => 'Nota não encontrada.'
+				];
+			} catch (\Exception $e) {
+				return [
+					'error'   => TRUE,
+					'message' => 'Ocorreu algum erro ao editar a nota.'
+				];
+			}
 		}
 
 		/**
@@ -84,8 +103,22 @@
 		 *
 		 * @param $id
 		 * @param $noteId
+		 *
+		 * @return array
 		 */
 		public function destroy($id, $noteId) {
-			$this->repository->delete($noteId);
+			try {
+				$this->repository->delete($id);
+			} catch (ModelNotFoundException $e) {
+				return [
+					'error'   => TRUE,
+					'message' => 'Nota não encontrada.'
+				];
+			} catch (\Exception $e) {
+				return [
+					'error'   => TRUE,
+					'message' => 'Ocorreu algum erro ao editar a nota.'
+				];
+			}
 		}
 	}
