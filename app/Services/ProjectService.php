@@ -53,7 +53,7 @@
 		public function showMembers($id) {
 			try {
 				return $this->repository->with(['members'])->find($id);
-			} catch (ModelNotFoundException $ex) {
+			} catch (ModelNotFoundException $e) {
 				return [
 					'error'   => TRUE,
 					'message' => 'ID não encontrado.'
@@ -67,7 +67,7 @@
 		 * @param $id
 		 * @param $memberId
 		 *
-		 * @return array|mixed
+		 * @return array
 		 */
 		public function addMember($id, $memberId) {
 			try {
@@ -90,18 +90,16 @@
 		 * @param $id
 		 * @param $memberId
 		 *
-		 * @return array|\Illuminate\Http\JsonResponse
+		 * @return array
 		 */
 		public function removeMember($id, $memberId) {
 			try {
 				$this->repository->with(['members'])->find($id)->detach($memberId);
 				return response()->json([
 					'error'   => FALSE,
-					'message' => [
-						'removeMember' => "Membro de ID {$memberId} removido."
-					]
+					'message' => 'Membro de ID ' . $memberId . ' removido.'
 				]);
-			} catch (ModelNotFoundException $ex) {
+			} catch (ModelNotFoundException $e) {
 				return [
 					'error'   => TRUE,
 					'message' => 'ID não encontrado.'
@@ -123,18 +121,14 @@
 				if (!$member) {
 					return [
 						'error'   => TRUE,
-						'message' => [
-							'isMember' => "Membro de ID {$memberId} não é um membro desse projeto"
-						]
+						'message' => 'Membro de ID ' . $memberId . ' não é um membro desse projeto'
 					];
 				}
 				return [
 					'error'   => FALSE,
-					'message' => [
-						'isMember' => "{$member->name} é um membro desse projeto"
-					]
+					'message' => $member->name . ' é um membro desse projeto'
 				];
-			} catch (ModelNotFoundException $ex) {
+			} catch (ModelNotFoundException $e) {
 				return [
 					'error'   => TRUE,
 					'message' => 'ID não encontrado.'
