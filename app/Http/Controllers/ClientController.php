@@ -75,6 +75,10 @@
 		public function destroy($id) {
 			try {
 				$this->repository->delete($id);
+				return [
+					'error'   => FALSE,
+					'message' => 'Cliente deletado com sucesso.'
+				];
 			} catch (QueryException $e) {
 				return [
 					'error'   => TRUE,

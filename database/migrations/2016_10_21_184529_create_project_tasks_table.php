@@ -4,19 +4,21 @@
 	use Illuminate\Database\Schema\Blueprint;
 	use Illuminate\Support\Facades\Schema;
 
-	class CreateProjectNotesTable extends Migration {
+	class CreateProjectTasksTable extends Migration {
 		/**
 		 * Run the migrations.
 		 *
 		 * @return void
 		 */
 		public function up() {
-			Schema::create('project_notes', function(Blueprint $table) {
+			Schema::create('project_tasks', function(Blueprint $table) {
 				$table->increments('id');
 				$table->integer('project_id')->unsigned();
 				$table->foreign('project_id')->references('id')->on('projects');
-				$table->string('title');
-				$table->text('note');
+				$table->string('name');
+				$table->date('start_date')->nullable();
+				$table->date('due_date')->nullable();
+				$table->smallInteger('status')->unsigned();
 				$table->timestamps();
 			});
 		}
@@ -27,6 +29,6 @@
 		 * @return void
 		 */
 		public function down() {
-			Schema::drop('project_notes');
+			Schema::drop('project_tasks');
 		}
 	}

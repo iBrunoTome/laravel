@@ -2,28 +2,28 @@
 
 	namespace CodeProject\Http\Controllers;
 
-	use CodeProject\Repositories\ProjectNoteRepository;
-	use CodeProject\Services\ProjectNoteService;
+	use CodeProject\Repositories\ProjectTaskRepository;
+	use CodeProject\Services\ProjectTaskService;
 	use Illuminate\Database\Eloquent\ModelNotFoundException;
 	use Illuminate\Http\Request;
 
-	class ProjectNoteController extends Controller {
+	class ProjectTaskController extends Controller {
 		/**
-		 * @var ProjectNoteRepository
+		 * @var ProjectTaskRepository
 		 */
 		private $repository;
 		/**
-		 * @var ProjectNoteService
+		 * @var ProjectTaskService
 		 */
 		private $service;
 
 		/**
 		 * ClientController constructor.
 		 *
-		 * @param ProjectNoteRepository $repository
-		 * @param ProjectNoteService    $service
+		 * @param ProjectTaskRepository $repository
+		 * @param ProjectTaskService    $service
 		 */
-		public function __construct(ProjectNoteRepository $repository, ProjectNoteService $service) {
+		public function __construct(ProjectTaskRepository $repository, ProjectTaskService $service) {
 			$this->repository = $repository;
 			$this->service = $service;
 		}
@@ -55,20 +55,20 @@
 		 *
 		 * @param $id
 		 *
-		 * @param $noteId
+		 * @param $TaskId
 		 *
 		 * @return array
 		 */
-		public function show($id, $noteId) {
+		public function show($id, $TaskId) {
 			try {
 				return $this->repository->findWhere([
 					'project_id' => $id,
-					'id'         => $noteId
+					'id'         => $TaskId
 				]);
 			} catch (ModelNotFoundException $e) {
 				return [
 					'error'   => TRUE,
-					'message' => 'Nota não encontrada.'
+					'message' => 'Task não encontrada.'
 				];
 			}
 		}
@@ -78,22 +78,22 @@
 		 *
 		 * @param $request
 		 * @param $id
-		 * @param $noteId
+		 * @param $taskId
 		 *
 		 * @return array
 		 */
-		public function update(Request $request, $id, $noteId) {
+		public function update(Request $request, $id, $taskId) {
 			try {
 				return $this->service->update($request->all(), $id);
 			} catch (ModelNotFoundException $e) {
 				return [
 					'error'   => TRUE,
-					'message' => 'Nota não encontrada.'
+					'message' => 'Task não encontrada.'
 				];
 			} catch (\Exception $e) {
 				return [
 					'error'   => TRUE,
-					'message' => 'Ocorreu algum erro ao editar a nota.'
+					'message' => 'Ocorreu algum erro ao editar a task.'
 				];
 			}
 		}
@@ -102,26 +102,26 @@
 		 * Remove the specified resource from storage.
 		 *
 		 * @param $id
-		 * @param $noteId
+		 * @param $taskId
 		 *
 		 * @return array
 		 */
-		public function destroy($id, $noteId) {
+		public function destroy($id, $taskId) {
 			try {
 				$this->repository->delete($id);
 				return [
 					'error'   => FALSE,
-					'message' => 'Nota deletada com sucesso.'
+					'message' => 'Task deletada com sucesso.'
 				];
 			} catch (ModelNotFoundException $e) {
 				return [
 					'error'   => TRUE,
-					'message' => 'Nota não encontrada.'
+					'message' => 'Task não encontrada.'
 				];
 			} catch (\Exception $e) {
 				return [
 					'error'   => TRUE,
-					'message' => 'Ocorreu algum erro ao editar a nota.'
+					'message' => 'Ocorreu algum erro ao editar a task.'
 				];
 			}
 		}
