@@ -11,6 +11,8 @@
 	|
 	*/
 
+	use LucaDegasperi\OAuth2Server\Facades\Authorizer;
+
 	Route::get('/', function() {
 		return view('app');
 	});
@@ -28,24 +30,17 @@
 			]
 		]);
 
-		Route::resource('project', 'ProjectController', [
-			'except' => [
-				'create',
-				'edit'
-			]
-		]);
-
-		Route::resource('project.member', 'ProjectMemberController', [
-			'except' => [
-				'create',
-				'edit',
-				'update'
-			]
-		]);
+		Route::group(['middleware' => 'CheckProjectOwner'], function() {
+			Route::resource('project', 'ProjectController', [
+				'except' => [
+					'create',
+					'edit'
+				]
+			]);
+		});
 
 		Route::group([
-			'middleware' => 'check.project.permission',
-			'prefix'     => 'project'
+			'prefix' => 'project'
 		], function() {
 
 			Route::get('{id}/note', 'ProjectNoteController@index');
@@ -60,4 +55,12 @@
 			Route::put('{id}/task/{taskId}', 'ProjectTaskController@update');
 			Route::delete('{id}/task/{taskId}', 'ProjectTaskController@destroy');
 		});
+
+		Route::resource('project.member', 'ProjectMemberController', [
+			'except' => [
+				'create',
+				'edit',
+				'update'
+			]
+		]);
 	});

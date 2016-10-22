@@ -7,7 +7,6 @@
 	use Illuminate\Database\Eloquent\ModelNotFoundException;
 	use Illuminate\Database\QueryException;
 	use Illuminate\Http\Request;
-	use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 	class ProjectController extends Controller {
 		/**
@@ -57,11 +56,6 @@
 		 */
 		public function show($id) {
 			try {
-				$userId = Authorizer::getResourceOwnerId();
-
-				if ($this->repository->isOwner($id, $userId) == FALSE) {
-					return ['success' => FALSE];
-				}
 				return $this->repository->find($id);
 			} catch (ModelNotFoundException $e) {
 				return [
