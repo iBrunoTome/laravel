@@ -13,7 +13,8 @@
 		"laravel/framework": "5.3.*",
 		"prettus/l5-repository": "^2.6",
 		"prettus/laravel-validation": "1.1.*",
-		"lucadegasperi/oauth2-server-laravel": "5.2.0"
+		"lucadegasperi/oauth2-server-laravel": "5.2.0",
+		"league/fractal": "^0.14.0"
 	},
 	"require-dev": {
 		"fzaninotto/faker": "~1.4",
