@@ -9,6 +9,12 @@
 		 * @return void
 		 */
 		public function run() {
+			factory(\CodeProject\Entities\User::class, 10)->create([
+				'name'           => 'Bruno Tomé',
+				'email'          => 'ibrunotome@gmail.com',
+				'password'       => bcrypt(123456),
+				'remember_token' => str_random(10)
+			]);
 			factory(\CodeProject\Entities\User::class, 10)->create();
 		}
 	}
