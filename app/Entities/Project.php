@@ -6,6 +6,16 @@
 	use Prettus\Repository\Contracts\Transformable;
 	use Prettus\Repository\Traits\TransformableTrait;
 
+	/**
+	 * @property integer   id
+	 * @property integer   client_id
+	 * @property integer   owner_id
+	 * @property string    name
+	 * @property string    description
+	 * @property integer   progress
+	 * @property integer   status
+	 * @property \DateTime due_date
+	 */
 	class Project extends Model implements Transformable {
 		use TransformableTrait;
 		protected $fillable = [

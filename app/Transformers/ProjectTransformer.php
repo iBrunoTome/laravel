@@ -9,9 +9,11 @@
 		public function transform(Project $project) {
 			return [
 				'project_id'  => $project->id,
-				'project'     => $project,
+				'client_id'   => $project->client_id,
+				'owner_id'    => $project->owner_id,
+				'project'     => $project->name,
 				'description' => $project->description,
-				'progress'    => $project->project,
+				'progress'    => $project->progress,
 				'status'      => $project->status,
 				'due_date'    => $project->due_date
 			];

@@ -3,6 +3,7 @@
 	namespace CodeProject\Repositories;
 
 	use CodeProject\Entities\Project;
+	use CodeProject\Presenters\ProjectPresenter;
 	use Prettus\Repository\Criteria\RequestCriteria;
 	use Prettus\Repository\Eloquent\BaseRepository;
 
@@ -48,5 +49,9 @@
 			}
 
 			return FALSE;
+		}
+
+		public function presenter() {
+			return ProjectPresenter::class;
 		}
 	}
