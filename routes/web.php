@@ -2,20 +2,17 @@
 
 	/*
 	|--------------------------------------------------------------------------
-	| Web Routes
+	| Application Routes
 	|--------------------------------------------------------------------------
 	|
-	| This file is where you may define all of the routes that are handled
-	| by your application. Just tell Laravel the URIs it should respond
-	| to using a Closure or controller method. Build something great!
+	| Here is where you can register all of the routes for an application.
+	| It's a breeze. Simply tell Laravel the URIs it should respond to
+	| and give it the controller to call when that URI is requested.
 	|
 	*/
 
-	use Illuminate\Support\Facades\Response;
-	use LucaDegasperi\OAuth2Server\Facades\Authorizer;
-
 	Route::get('/', function() {
-		return view('welcome');
+		return view('app');
 	});
 
 	Route::post('oauth/access_token', function() {
@@ -25,20 +22,35 @@
 	Route::group(['middleware' => 'oauth'], function() {
 
 		Route::resource('client', 'ClientController', [
-			'except' => 'create',
-			'edit'
+			'except' => [
+				'create',
+				'edit'
+			]
 		]);
 
-		Route::group(['prefix' => 'project'], function() {
-
-			Route::resource('project', 'ProjectController', [
-				'except' => 'create',
+		Route::resource('project', 'ProjectController', [
+			'except' => [
+				'create',
 				'edit'
-			]);
+			]
+		]);
+
+		Route::resource('project.member', 'ProjectMemberController', [
+			'except' => [
+				'create',
+				'edit',
+				'update'
+			]
+		]);
+
+		Route::group([
+			'middleware' => 'check.project.permission',
+			'prefix'     => 'project'
+		], function() {
 
 			Route::get('{id}/note', 'ProjectNoteController@index');
-			Route::post('{id}/note', 'ProjectNoteController@store');
 			Route::get('{id}/note/{noteId}', 'ProjectNoteController@show');
+			Route::post('{id}/note', 'ProjectNoteController@store');
 			Route::put('{id}/note/{noteId}', 'ProjectNoteController@update');
 			Route::delete('{id}/note/{noteId}', 'ProjectNoteController@destroy');
 
@@ -47,8 +59,5 @@
 			Route::get('{id}/task/{taskId}', 'ProjectTaskController@show');
 			Route::put('{id}/task/{taskId}', 'ProjectTaskController@update');
 			Route::delete('{id}/task/{taskId}', 'ProjectTaskController@destroy');
-
-			Route::get('{id}/member', 'ProjectMemberController@index');
 		});
 	});
-
