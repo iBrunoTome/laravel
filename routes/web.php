@@ -47,6 +47,8 @@
 			Route::put('{id}/note/{noteId}', 'ProjectNoteController@update');
 			Route::delete('{id}/note/{noteId}', 'ProjectNoteController@destroy');
 
+			Route::post('{id}/file', 'ProjectFileController@store');
+
 			Route::get('{id}/task', 'ProjectTaskController@index');
 			Route::post('{id}/task', 'ProjectTaskController@store');
 			Route::get('{id}/task/{taskId}', 'ProjectTaskController@show');

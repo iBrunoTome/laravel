@@ -5,6 +5,8 @@
 	use CodeProject\Repositories\ProjectRepository;
 	use CodeProject\Validators\ProjectValidator;
 	use Illuminate\Database\Eloquent\ModelNotFoundException;
+	use Illuminate\Support\Facades\File;
+	use Illuminate\Support\Facades\Storage;
 	use Prettus\Validator\Exceptions\ValidatorException;
 
 	class ProjectService {
@@ -134,5 +136,9 @@
 					'message' => 'ID não encontrado.'
 				];
 			}
+		}
+
+		public function createFile(array $data) {
+			Storage::put($data['name'] . '.' . $data['extension'], File::get($data['file']));
 		}
 	}
