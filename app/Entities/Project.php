@@ -21,4 +21,8 @@
 		public function notes() {
 			return $this->hasMany(ProjectNote::class);
 		}
+
+		public function members() {
+			return $this->belongsToMany(User::class, 'project_members', 'project_id', 'member_id');
+		}
 	}
