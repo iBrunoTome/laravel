@@ -15,6 +15,7 @@
 	 * @property integer   progress
 	 * @property integer   status
 	 * @property \DateTime due_date
+	 * @property mixed     members
 	 */
 	class Project extends Model implements Transformable {
 		use TransformableTrait;
