@@ -56,7 +56,7 @@
 		 * @return mixed
 		 */
 		public function show($id) {
-			if ($this->checkProjectOwner($id) == FALSE) {
+			if ($this->checkProjectPermissions($id) == FALSE) {
 				return ['error' => 'Acesso proibido'];
 			}
 			try {
@@ -69,10 +69,24 @@
 			}
 		}
 
+		private function checkProjectPermissions($projectId) {
+			if ($this->checkProjectOwner($projectId) || $this->checkProjectMember($projectId)) {
+				return TRUE;
+			}
+
+			return FALSE;
+		}
+
 		private function checkProjectOwner($projectId) {
 			$userId = Authorizer::getResourceOwnerId();
 
 			return ($this->repository->isOwner($projectId, $userId));
+		}
+
+		private function checkProjectMember($memberId) {
+			$userId = Authorizer::getResourceOwnerId();
+
+			return ($this->repository->hasMember($memberId, $userId));
 		}
 
 		/**
@@ -83,7 +97,7 @@
 		 * @return array
 		 */
 		public function destroy($id) {
-			if ($this->checkProjectOwner($id) == FALSE) {
+			if ($this->checkProjectPermissions($id) == FALSE) {
 				return ['error' => 'Acesso proibido'];
 			}
 			try {
@@ -119,7 +133,7 @@
 		 * @return array
 		 */
 		public function update(Request $request, $id) {
-			if ($this->checkProjectOwner($id) == FALSE) {
+			if ($this->checkProjectPermissions($id) == FALSE) {
 				return ['error' => 'Acesso proibido'];
 			}
 			try {
