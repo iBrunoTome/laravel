@@ -30,14 +30,12 @@
 			]
 		]);
 
-		Route::group(['middleware' => 'CheckProjectOwner'], function() {
-			Route::resource('project', 'ProjectController', [
-				'except' => [
-					'create',
-					'edit'
-				]
-			]);
-		});
+		Route::resource('project', 'ProjectController', [
+			'except' => [
+				'create',
+				'edit'
+			]
+		]);
 
 		Route::group([
 			'prefix' => 'project'

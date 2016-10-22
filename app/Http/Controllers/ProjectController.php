@@ -7,6 +7,7 @@
 	use Illuminate\Database\Eloquent\ModelNotFoundException;
 	use Illuminate\Database\QueryException;
 	use Illuminate\Http\Request;
+	use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 	class ProjectController extends Controller {
 		/**
@@ -33,7 +34,7 @@
 		 * Display a listing of the resource.
 		 */
 		public function index() {
-			return $this->repository->all();
+			return $this->repository->findWhere(['owner_id' => Authorizer::getResourceOwnerId()]);
 		}
 
 		/**
@@ -55,6 +56,9 @@
 		 * @return mixed
 		 */
 		public function show($id) {
+			if ($this->checkProjectOwner($id) == FALSE) {
+				return ['error' => 'Acesso proibido'];
+			}
 			try {
 				return $this->repository->find($id);
 			} catch (ModelNotFoundException $e) {
@@ -65,6 +69,12 @@
 			}
 		}
 
+		private function checkProjectOwner($projectId) {
+			$userId = Authorizer::getResourceOwnerId();
+
+			return ($this->repository->isOwner($projectId, $userId));
+		}
+
 		/**
 		 * Remove the specified resource from storage.
 		 *
@@ -73,6 +83,9 @@
 		 * @return array
 		 */
 		public function destroy($id) {
+			if ($this->checkProjectOwner($id) == FALSE) {
+				return ['error' => 'Acesso proibido'];
+			}
 			try {
 				$this->repository->delete($id);
 				return [
@@ -106,6 +119,9 @@
 		 * @return array
 		 */
 		public function update(Request $request, $id) {
+			if ($this->checkProjectOwner($id) == FALSE) {
+				return ['error' => 'Acesso proibido'];
+			}
 			try {
 				return $this->service->update($request->all(), $id);
 			} catch (ModelNotFoundException $e) {
