@@ -14,6 +14,7 @@
 		 */
 		protected $middleware = [
 			\Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+			\LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class,
 		];
 		/**
 		 * The application's route middleware groups.
@@ -42,12 +43,17 @@
 		 * @var array
 		 */
 		protected $routeMiddleware = [
-			'auth'       => \Illuminate\Auth\Middleware\Authenticate::class,
-			'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-			'bindings'   => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-			'can'        => \Illuminate\Auth\Middleware\Authorize::class,
-			'guest'      => \CodeProject\Http\Middleware\RedirectIfAuthenticated::class,
-			'throttle'   => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-			'csrf'       => \CodeProject\Http\Middleware\VerifyCsrfToken::class,
+			'auth'                       => \Illuminate\Auth\Middleware\Authenticate::class,
+			'auth.basic'                 => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+			'bindings'                   => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+			'can'                        => \Illuminate\Auth\Middleware\Authorize::class,
+			'guest'                      => \CodeProject\Http\Middleware\RedirectIfAuthenticated::class,
+			'throttle'                   => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+			'csrf'                       => \CodeProject\Http\Middleware\VerifyCsrfToken::class,
+			'oauth'                      => \LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware::class,
+			'oauth-user'                 => \LucaDegasperi\OAuth2Server\Middleware\OAuthUserOwnerMiddleware::class,
+			'oauth-client'               => \LucaDegasperi\OAuth2Server\Middleware\OAuthClientOwnerMiddleware::class,
+			'check-authorization-params' => \LucaDegasperi\OAuth2Server\Middleware\CheckAuthCodeRequestMiddleware::class,
+
 		];
 	}
