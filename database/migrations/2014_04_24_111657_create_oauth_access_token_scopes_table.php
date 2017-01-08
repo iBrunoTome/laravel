@@ -38,12 +38,12 @@ class CreateOauthAccessTokenScopesTable extends Migration
             $table->index('scope_id');
 
             $table->foreign('access_token_id')
-                  ->references('id')->on('oauth_access_tokens')
-                  ->onDelete('cascade');
+                ->references('id')->on('oauth_access_tokens')
+                ->onDelete('cascade');
 
             $table->foreign('scope_id')
-                  ->references('id')->on('oauth_scopes')
-                  ->onDelete('cascade');
+                ->references('id')->on('oauth_scopes')
+                ->onDelete('cascade');
         });
     }
 

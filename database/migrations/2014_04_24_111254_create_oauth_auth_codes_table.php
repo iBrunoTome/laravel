@@ -38,8 +38,8 @@ class CreateOauthAuthCodesTable extends Migration
             $table->index('session_id');
 
             $table->foreign('session_id')
-                  ->references('id')->on('oauth_sessions')
-                  ->onDelete('cascade');
+                ->references('id')->on('oauth_sessions')
+                ->onDelete('cascade');
         });
     }
 

@@ -35,8 +35,8 @@ class CreateOauthRefreshTokensTable extends Migration
             $table->timestamps();
 
             $table->foreign('access_token_id')
-                  ->references('id')->on('oauth_access_tokens')
-                  ->onDelete('cascade');
+                ->references('id')->on('oauth_access_tokens')
+                ->onDelete('cascade');
         });
     }
 

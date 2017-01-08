@@ -1,13 +1,15 @@
 <?php
 
-	namespace CodeProject\Repositories;
+namespace CodeProject\Repositories;
 
-	use Prettus\Repository\Contracts\RepositoryInterface;
+use Prettus\Repository\Contracts\RepositoryInterface;
 
-	/**
-	 * Interface ProjectNoteRepository
-	 * @package namespace CodeProject\Repositories;
-	 */
-	interface ProjectNoteRepository extends RepositoryInterface {
-		//
-	}
+/**
+ * Interface ProjectNoteRepository
+ *
+ * @package namespace CodeProject\Repositories;
+ */
+interface ProjectNoteRepository extends RepositoryInterface
+{
+    //
+}

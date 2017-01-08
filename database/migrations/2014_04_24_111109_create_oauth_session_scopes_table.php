@@ -38,12 +38,12 @@ class CreateOauthSessionScopesTable extends Migration
             $table->index('scope_id');
 
             $table->foreign('session_id')
-                  ->references('id')->on('oauth_sessions')
-                  ->onDelete('cascade');
+                ->references('id')->on('oauth_sessions')
+                ->onDelete('cascade');
 
             $table->foreign('scope_id')
-                  ->references('id')->on('oauth_scopes')
-                  ->onDelete('cascade');
+                ->references('id')->on('oauth_scopes')
+                ->onDelete('cascade');
         });
     }
 

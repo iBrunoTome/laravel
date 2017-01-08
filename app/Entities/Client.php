@@ -1,16 +1,17 @@
 <?php
 
-	namespace CodeProject\Entities;
+namespace CodeProject\Entities;
 
-	use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 
-	class Client extends Model {
-		protected $fillable = [
-			'name',
-			'responsible',
-			'email',
-			'phone',
-			'address',
-			'obs'
-		];
-	}
+class Client extends Model
+{
+    protected $fillable = [
+        'name',
+        'responsible',
+        'email',
+        'phone',
+        'address',
+        'obs'
+    ];
+}

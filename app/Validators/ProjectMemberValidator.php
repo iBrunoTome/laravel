@@ -1,12 +1,13 @@
 <?php
 
-	namespace CodeProject\Validators;
+namespace CodeProject\Validators;
 
-	use Prettus\Validator\LaravelValidator;
+use Prettus\Validator\LaravelValidator;
 
-	class ProjectMemberValidator extends LaravelValidator {
-		protected $rules = [
-			'project_id' => 'required|integer',
-			'member_id'  => 'required|integer'
-		];
-	}
+class ProjectMemberValidator extends LaravelValidator
+{
+    protected $rules = [
+        'project_id' => 'required|integer',
+        'member_id'  => 'required|integer'
+    ];
+}

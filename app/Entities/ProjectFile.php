@@ -1,23 +1,25 @@
 <?php
 
-	namespace CodeProject\Entities;
+namespace CodeProject\Entities;
 
-	use Illuminate\Database\Eloquent\Model;
-	use Prettus\Repository\Contracts\Transformable;
-	use Prettus\Repository\Traits\TransformableTrait;
+use Illuminate\Database\Eloquent\Model;
+use Prettus\Repository\Contracts\Transformable;
+use Prettus\Repository\Traits\TransformableTrait;
 
-	/**
-	 * @property integer id
-	 */
-	class ProjectFile extends Model implements Transformable {
-		use TransformableTrait;
-		protected $fillable = [
-			'name',
-			'description',
-			'extension'
-		];
+/**
+ * @property integer id
+ */
+class ProjectFile extends Model implements Transformable
+{
+    use TransformableTrait;
+    protected $fillable = [
+        'name',
+        'description',
+        'extension'
+    ];
 
-		public function project() {
-			return $this->belongsTo(Project::class);
-		}
-	}
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
+}

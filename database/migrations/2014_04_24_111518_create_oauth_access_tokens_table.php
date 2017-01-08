@@ -34,12 +34,15 @@ class CreateOauthAccessTokensTable extends Migration
 
             $table->timestamps();
 
-            $table->unique(['id', 'session_id']);
+            $table->unique([
+                'id',
+                'session_id'
+            ]);
             $table->index('session_id');
 
             $table->foreign('session_id')
-                  ->references('id')->on('oauth_sessions')
-                  ->onDelete('cascade');
+                ->references('id')->on('oauth_sessions')
+                ->onDelete('cascade');
         });
     }
 

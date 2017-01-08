@@ -34,7 +34,10 @@ class CreateOauthClientEndpointsTable extends Migration
 
             $table->timestamps();
 
-            $table->unique(['client_id', 'redirect_uri']);
+            $table->unique([
+                'client_id',
+                'redirect_uri'
+            ]);
 
             $table->foreign('client_id')
                 ->references('id')->on('oauth_clients')
